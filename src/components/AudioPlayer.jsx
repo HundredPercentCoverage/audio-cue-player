@@ -33,7 +33,7 @@ function AudioPlayer() {
 
   return (
     <Segment>
-      <audio src={file} ref={player} />
+      <audio src={file} ref={player} onEnded={() => setPlay(false)}/>
       <input type="file" ref={fileInput} accept="audio/*" hidden onChange={handleFileChange} />
       <Button icon onClick={() => fileInput.current.click()}>
         <Icon name="folder" />
