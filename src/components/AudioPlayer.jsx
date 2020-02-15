@@ -3,37 +3,48 @@ import { Button, Icon, Segment } from 'semantic-ui-react';
 
 function AudioPlayer() {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState(null);
+
   const player = useRef();
+  const fileInput = useRef();
 
   const [play, setPlay] = useState(false);
   useEffect(() => {
-    if (file) {
-      if (play) {
-        player.current.play();
-      }
+    if (play) {
+      player.current.play();
+    }
 
-      if (!play) {
-        player.current.pause();
-      }
+    if (!play) {
+      player.current.pause();
     }
     
-  }, [play, file])
+  }, [play])
 
   const handleStopClick = () => {
     setPlay(false);
     player.current.currentTime = 0;
   }
 
+  const handleFileChange = (e) => {
+    setPlay(false);
+    setFileName(e.target.files[0].name);
+    setFile(URL.createObjectURL(e.target.files[0]));
+  }
+
   return (
     <Segment>
       <audio src={file} ref={player} />
-      <Button loading={!file} icon onClick={() => setPlay(!play)}>
+      <input type="file" ref={fileInput} accept="audio/*" hidden onChange={handleFileChange} />
+      <Button icon onClick={() => fileInput.current.click()}>
+        <Icon name="folder" />
+      </Button>
+      <Button disabled={!file} icon onClick={() => setPlay(!play)}>
         <Icon name={play ? 'pause' : 'play'} />
       </Button>
-      <Button icon onClick={handleStopClick}>
+      <Button disabled={!file} icon onClick={handleStopClick}>
         <Icon name="stop" />
       </Button>
-      <input type="file" accept="audio/*" onChange={(e) => setFile(URL.createObjectURL(e.target.files[0]))} />
+      <span style={{ padding: 'inherit' }}>{fileName || 'No file selected'}</span>
     </Segment>
   )
 }
