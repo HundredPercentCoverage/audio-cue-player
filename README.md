@@ -13,4 +13,4 @@ To Run the app:
 
 #### Use Case
 
-Amateur theatre companies may want a simple solution to cueing up sound effects.
+Amateur theatre companies may want a simple solution to queue up sound effects.
