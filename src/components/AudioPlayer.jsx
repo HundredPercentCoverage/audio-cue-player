@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, Icon, Segment } from 'semantic-ui-react';
 
-function AudioPlayer() {
+function AudioPlayer(props) {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
 
@@ -39,10 +39,10 @@ function AudioPlayer() {
         <Icon name="folder" />
       </Button>
       <Button disabled={!file} icon onClick={() => setPlay(!play)}>
-        <Icon name={play ? 'pause' : 'play'} />
+        <Icon name={play ? 'pause' : 'play'} color={play ? 'blue' : 'green'}/>
       </Button>
       <Button disabled={!file} icon onClick={handleStopClick}>
-        <Icon name="stop" />
+        <Icon name="stop" color="red" />
       </Button>
       <span style={{ padding: 'inherit' }}>{fileName || 'No file selected'}</span>
     </Segment>
