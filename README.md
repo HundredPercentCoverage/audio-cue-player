@@ -3,10 +3,12 @@ An audio playlist builder using React Hooks.
 
 Bootstrapped with `create-react-app`.
 
-To install:
+Currently hosted at [https://hundredpercentcoverage.github.io/audio-cue-player](https://hundredpercentcoverage.github.io/audio-cue-player)
+
+To install, clone this repository, `cd` into it and run:
 `npm install`
 
-To Run:
+To Run the app:
 `npm run start`
 
 #### Use Case
