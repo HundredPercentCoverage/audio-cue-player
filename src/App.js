@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { Container, Segment, Header, Button, Icon } from 'semantic-ui-react';
 import AudioPlayer from './components/AudioPlayer';
 
@@ -8,11 +8,29 @@ const style = {
   },
 }
 
+const initialState = [{ id: 1 }];
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'add':
+      return [
+        ...state,
+        {
+          id: state[state.length - 1].id + 1
+        }
+      ];
+    default:
+      return state;
+  }
+}
+
 function App() {
-  const [players, setPlayers] = useState([1]);
+  const [players, dispatch] = useReducer(reducer, initialState);
 
   const addPlayer = () => {
-    setPlayers(prevState => [...prevState, prevState.length + 1]);
+    dispatch({
+      type: 'add',
+    });
   }
 
   return (
@@ -20,7 +38,7 @@ function App() {
       <Header as='h1' content='Cue Queue' style={style.h1} textAlign='center' />
       <Container>
         <Segment.Group>
-          {players.map(playerNumber => <AudioPlayer key={playerNumber} />)}
+          {players.map(player => <AudioPlayer key={player.id} playerId={player.id} />)}
         </Segment.Group>
         <Button icon onClick={addPlayer}>
           <Icon name="plus" />
