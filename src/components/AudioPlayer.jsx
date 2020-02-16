@@ -31,6 +31,8 @@ function AudioPlayer(props) {
     setFile(URL.createObjectURL(e.target.files[0]));
   }
 
+  const { deletePlayer, playerId } = props;
+
   return (
     <Segment>
       <audio src={file} ref={player} onEnded={() => setPlay(false)}/>
@@ -43,6 +45,9 @@ function AudioPlayer(props) {
       </Button>
       <Button disabled={!file} icon onClick={handleStopClick}>
         <Icon name="stop" color="red" />
+      </Button>
+      <Button icon onClick={() => deletePlayer(playerId)}>
+        <Icon name="delete" />
       </Button>
       <span style={{ padding: 'inherit' }}>{fileName || 'No file selected'}</span>
     </Segment>

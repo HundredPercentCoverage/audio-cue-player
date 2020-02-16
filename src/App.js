@@ -16,11 +16,17 @@ const reducer = (state, action) => {
       return [
         ...state,
         {
-          id: state[state.length - 1].id + 1
+          id: state.length ? state[state.length - 1].id + 1 : 1
         }
       ];
+    case 'delete':
+      const newState = state.filter(el => el.id !== action.id);
+
+      return [
+        ...newState
+      ];
     default:
-      return state;
+      return initialState;
   }
 }
 
@@ -33,12 +39,19 @@ function App() {
     });
   }
 
+  const deletePlayer = (id) => {
+    dispatch({
+      type: 'delete',
+      id
+    });
+  }
+
   return (
     <div>
       <Header as='h1' content='Cue Queue' style={style.h1} textAlign='center' />
       <Container>
         <Segment.Group>
-          {players.map(player => <AudioPlayer key={player.id} playerId={player.id} />)}
+          {players.map(player => <AudioPlayer key={player.id} playerId={player.id} deletePlayer={deletePlayer} />)}
         </Segment.Group>
         <Button icon onClick={addPlayer}>
           <Icon name="plus" />
