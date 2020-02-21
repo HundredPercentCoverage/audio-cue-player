@@ -1,7 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import { Button, Icon, Segment } from 'semantic-ui-react';
+import { PlayersContext } from '../App';
 
 function AudioPlayer(props) {
+  const playersContext = useContext(PlayersContext);
+
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
 
@@ -31,7 +34,7 @@ function AudioPlayer(props) {
     setFile(URL.createObjectURL(e.target.files[0]));
   }
 
-  const { deletePlayer, playerId } = props;
+  const { playerId } = props;
 
   return (
     <Segment>
@@ -46,7 +49,7 @@ function AudioPlayer(props) {
       <Button disabled={!file} icon onClick={handleStopClick}>
         <Icon name="stop" color="red" />
       </Button>
-      <Button icon onClick={() => deletePlayer(playerId)}>
+      <Button icon onClick={() => playersContext.playersDispatch({ type: 'delete', id: playerId })}>
         <Icon name="delete" />
       </Button>
       <span style={{ padding: 'inherit' }}>{fileName || 'No file selected'}</span>
