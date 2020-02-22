@@ -59,7 +59,6 @@ function AudioPlayer(props) {
       <Button icon onClick={() => playersContext.playersDispatch({ type: 'movedown', id: playerId })} floated='right'>
         <Icon name="arrow down" />
       </Button>
-      Blah
     </Segment>
   )
 }
