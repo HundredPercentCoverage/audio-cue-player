@@ -13,6 +13,8 @@ const style = {
 const initialState = [{ id: 1 }];
 
 const reducer = (state, action) => {
+  let newState, indexOfPlayerToMove;
+
   switch (action.type) {
     case 'add':
       return [
@@ -22,8 +24,36 @@ const reducer = (state, action) => {
         }
       ];
     case 'delete':
-      const newState = state.filter(el => el.id !== action.id);
+      newState = state.filter(el => el.id !== action.id);
 
+      return [
+        ...newState
+      ];
+    case 'moveup':
+      indexOfPlayerToMove = state.findIndex(player => player.id === action.id);
+      newState = state;
+
+      if (indexOfPlayerToMove !== 0) {
+        const playerToMove = state[indexOfPlayerToMove];
+
+        newState[indexOfPlayerToMove] = newState[indexOfPlayerToMove - 1];
+        newState[indexOfPlayerToMove - 1] = playerToMove;
+      }
+      
+      return [
+        ...newState
+      ];
+    case 'movedown':
+      indexOfPlayerToMove = state.findIndex(player => player.id === action.id);
+      newState = state;
+
+      if (indexOfPlayerToMove !== newState.length - 1) {
+        const playerToMove = state[indexOfPlayerToMove];
+
+        newState[indexOfPlayerToMove] = newState[indexOfPlayerToMove + 1];
+        newState[indexOfPlayerToMove + 1] = playerToMove;
+      }
+      
       return [
         ...newState
       ];

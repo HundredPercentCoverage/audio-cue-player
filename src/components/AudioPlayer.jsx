@@ -37,7 +37,7 @@ function AudioPlayer(props) {
   const { playerId } = props;
 
   return (
-    <Segment>
+    <Segment clearing>
       <audio src={file} ref={player} onEnded={() => setPlay(false)}/>
       <input type="file" ref={fileInput} accept="audio/*" hidden onChange={handleFileChange} />
       <Button icon onClick={() => fileInput.current.click()}>
@@ -53,6 +53,12 @@ function AudioPlayer(props) {
         <Icon name="delete" />
       </Button>
       <span style={{ padding: 'inherit' }}>{fileName || 'No file selected'}</span>
+      <Button icon onClick={() => playersContext.playersDispatch({ type: 'moveup', id: playerId })} floated='right'>
+        <Icon name="arrow up" />
+      </Button>
+      <Button icon onClick={() => playersContext.playersDispatch({ type: 'movedown', id: playerId })} floated='right'>
+        <Icon name="arrow down" />
+      </Button>
     </Segment>
   )
 }
