@@ -40,9 +40,9 @@ function AudioPlayer(props) {
     <Segment clearing>
       <audio src={file} ref={player} onEnded={() => setPlay(false)}/>
       <input type="file" ref={fileInput} accept="audio/*" hidden onChange={handleFileChange} />
-      <Button icon onClick={() => fileInput.current.click()}>
+      {/* <Button icon onClick={() => fileInput.current.click()}>
         <Icon name="folder" />
-      </Button>
+      </Button> */}
       <Button disabled={!file} icon onClick={() => setPlay(!play)}>
         <Icon name={play ? 'pause' : 'play'} color={play ? 'blue' : 'green'}/>
       </Button>
