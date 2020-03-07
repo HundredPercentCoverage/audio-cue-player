@@ -3,6 +3,7 @@ import { Button, Icon, Segment } from 'semantic-ui-react';
 import { PlayersContext } from '../App';
 
 function AudioPlayer(props) {
+  const { playerId, selected } = props;
   const playersContext = useContext(PlayersContext);
 
   const [file, setFile] = useState(null);
@@ -34,10 +35,8 @@ function AudioPlayer(props) {
     setFile(URL.createObjectURL(e.target.files[0]));
   }
 
-  const { playerId } = props;
-
   return (
-    <Segment clearing>
+    <Segment clearing color={selected ? 'green' : 'black'}>
       <audio src={file} ref={player} onEnded={() => setPlay(false)}/>
       <input type="file" ref={fileInput} accept="audio/*" hidden onChange={handleFileChange} />
       <Button icon onClick={() => fileInput.current.click()}>

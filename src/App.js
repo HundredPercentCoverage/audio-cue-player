@@ -10,10 +10,10 @@ const style = {
   },
 }
 
-const initialState = [{ id: 1 }];
+const initialState = [{ id: 1, selected: true }];
 
 const reducer = (state, action) => {
-  let newState, indexOfPlayerToMove;
+  let newState, indexOfPlayerToMove, indexOfSelectedPlayer;
 
   switch (action.type) {
     case 'add':
@@ -57,6 +57,32 @@ const reducer = (state, action) => {
       return [
         ...newState
       ];
+    case 'selectnext':
+      newState = state;
+
+      indexOfSelectedPlayer = newState.findIndex(player => player.selected);
+
+      if (indexOfSelectedPlayer < newState.length - 1) {
+        newState[indexOfSelectedPlayer].selected = false;
+        newState[indexOfSelectedPlayer + 1].selected = true;
+      }
+      
+      return [
+        ...newState
+      ];
+    case 'selectprevious':
+      newState = state;
+
+      indexOfSelectedPlayer = newState.findIndex(player => player.selected);
+
+      if (indexOfSelectedPlayer > 0) {
+        newState[indexOfSelectedPlayer].selected = false;
+        newState[indexOfSelectedPlayer - 1].selected = true;
+      }
+      
+      return [
+        ...newState
+      ];
     default:
       return initialState;
   }
@@ -70,8 +96,19 @@ function App() {
       <div>
         <Header as='h1' content='Cue Queue' style={style.h1} textAlign='center' />
         <Container>
+          <Button.Group>
+            <Button icon onClick={() => dispatch({ type: 'selectprevious' })}>
+              <Icon name='fast backward' />
+            </Button>
+            <Button icon>
+              <Icon name='play' />
+            </Button>
+            <Button icon onClick={() => dispatch({ type: 'selectnext' })}>
+              <Icon name='fast forward' />
+            </Button>
+          </Button.Group>
           <Segment.Group>
-            {players.map(player => <AudioPlayer key={player.id} playerId={player.id} />)}
+            {players.map(player => <AudioPlayer key={player.id} playerId={player.id} selected={player.selected} />)}
           </Segment.Group>
           <Button icon onClick={() => dispatch({ type: 'add' })}>
             <Icon name="plus" />
