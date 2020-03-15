@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import { Container, Segment, Header, Button, Icon } from 'semantic-ui-react';
-import AudioPlayer from './components/AudioPlayer';
+import SingleAudioPlayer from './components/SingleAudioPlayer';
+import MainPlayer from './components/MainPlayer';
 
 export const PlayersContext = React.createContext();
 
@@ -10,7 +11,7 @@ const style = {
   },
 }
 
-const initialState = [{ id: 1, selected: true }];
+const initialState = [{ id: 1, selected: true, file: null }];
 
 const reducer = (state, action) => {
   let newState, indexOfPlayerToMove, indexOfSelectedPlayer;
@@ -83,6 +84,15 @@ const reducer = (state, action) => {
       return [
         ...newState
       ];
+    case 'setplayerfile':
+      newState = state;
+
+      const indexOfPlayerToChange = newState.findIndex(player => player.id === action.id);
+      newState[indexOfPlayerToChange].file = action.file;
+
+      return [
+        ...newState
+      ];
     default:
       return initialState;
   }
@@ -91,24 +101,16 @@ const reducer = (state, action) => {
 function App() {
   const [players, dispatch] = useReducer(reducer, initialState);
 
+  const selectedFile = players.find(player => player.selected).file;
+
   return (
-    <PlayersContext.Provider value={{ playersState: players, playersDispatch: dispatch }}>
+    <PlayersContext.Provider value={{ players, dispatch }}>
       <div>
         <Header as='h1' content='Cue Queue' style={style.h1} textAlign='center' />
         <Container>
-          <Button.Group>
-            <Button icon onClick={() => dispatch({ type: 'selectprevious' })}>
-              <Icon name='fast backward' />
-            </Button>
-            <Button icon>
-              <Icon name='play' />
-            </Button>
-            <Button icon onClick={() => dispatch({ type: 'selectnext' })}>
-              <Icon name='fast forward' />
-            </Button>
-          </Button.Group>
+          <MainPlayer selectedFile={selectedFile} />
           <Segment.Group>
-            {players.map(player => <AudioPlayer key={player.id} playerId={player.id} selected={player.selected} />)}
+            {players.map(player => <SingleAudioPlayer key={player.id} selected={player.selected} file={player.file} playerId={player.id} />)}
           </Segment.Group>
           <Button icon onClick={() => dispatch({ type: 'add' })}>
             <Icon name="plus" />
