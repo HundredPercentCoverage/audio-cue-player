@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/audio-cue-player/precache-manifest.1f53807f329708536451b04abee42da6.js"
+  "/audio-cue-player/precache-manifest.da7dbb647dd617ac6eacbf4533ba5bf8.js"
 );
 
 self.addEventListener('message', (event) => {
