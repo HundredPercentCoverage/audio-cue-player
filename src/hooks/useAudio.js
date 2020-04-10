@@ -23,7 +23,12 @@ function useAudio(file) {
   }, [file, audioElement]);
 
   useEffect(() => {
-    playing ? audioElement.play() : audioElement.pause();
+    if (playing) {
+      audioElement.play();
+      setEnded(false);
+    } else {
+      audioElement.pause();
+    }
   }, [playing, audioElement]);
 
   return { playing, toggle, stop, ended };
