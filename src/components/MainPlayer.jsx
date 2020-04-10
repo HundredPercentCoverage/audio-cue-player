@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
-import { PlayersContext } from '../App';
+
+import { PlayersContext } from '../context/PlayersContext';
 import useAudio from '../hooks/useAudio';
 
 function MainPlayer({ selectedFile }) {
