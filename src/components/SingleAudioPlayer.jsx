@@ -2,7 +2,8 @@ import React from 'react';
 import { Segment, Button, Icon } from 'semantic-ui-react';
 import { useRef } from 'react';
 import { useContext } from 'react';
-import { PlayersContext } from '../App';
+
+import { PlayersContext } from '../context/PlayersContext';
 import useAudio from '../hooks/useAudio';
 
 function SingleAudioPlayer({ file, selected, playerId }) {
@@ -31,6 +32,12 @@ function SingleAudioPlayer({ file, selected, playerId }) {
         <Icon name="delete" />
       </Button>
       <span style={{ padding: 'inherit' }}>{file ? file.name : 'No file selected'}</span>
+      <Button icon onClick={() => dispatch({ type: 'moveup', id: playerId })} floated='right'>
+        <Icon name="arrow up" />
+      </Button>
+      <Button icon onClick={() => dispatch({ type: 'movedown', id: playerId })} floated='right'>
+        <Icon name="arrow down" />
+      </Button>
     </Segment>
   )
 }
