@@ -5,7 +5,7 @@ import { PlayersContext } from '../context/PlayersContext';
 import useAudio from '../hooks/useAudio';
 
 function MainPlayer({ selectedFile }) {
-  const { playing, toggle, ended } = useAudio(selectedFile);
+  const { playing, togglePlayback, ended } = useAudio(selectedFile);
   const { dispatch } = useContext(PlayersContext);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function MainPlayer({ selectedFile }) {
         <Button icon onClick={() => dispatch({ type: 'selectprevious' })}>
           <Icon name='fast backward' />
         </Button>
-        <Button icon onClick={toggle}>
+        <Button icon onClick={togglePlayback}>
           <Icon name={ playing ? 'pause' : 'play' } color={playing ? 'blue' : 'green'} />
         </Button>
         <Button icon onClick={() => dispatch({ type: 'selectnext' })}>
