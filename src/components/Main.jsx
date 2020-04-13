@@ -4,6 +4,7 @@ import { Container, Segment, Header, Button, Icon } from 'semantic-ui-react';
 import SingleAudioPlayer from './SingleAudioPlayer';
 import MainPlayer from './MainPlayer';
 import { PlayersContext } from '../context/PlayersContext';
+import NavBar from './NavBar';
 
 const style = {
   h1 : {
@@ -19,8 +20,9 @@ function Main() {
 
   return (
     <>
-      <Header as='h1' content='Cue Queue' style={style.h1} textAlign='center' />
+      <NavBar />
       <Container>
+        <Header as='h1' content='Your Cues' style={style.h1} textAlign='center' />
         <MainPlayer selectedFile={selectedFile}/>
         <Segment.Group>
           {players.map(player => <SingleAudioPlayer key={player.id} selected={player.selected} file={player.file} playerId={player.id} />)}
