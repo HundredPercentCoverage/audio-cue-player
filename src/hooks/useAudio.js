@@ -6,7 +6,7 @@ function useAudio(file) {
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
 
-  const toggle = () => setPlaying(!playing);
+  const togglePlayback = () => setPlaying(!playing);
 
   audioElement.addEventListener('ended', () => {
     setEnded(true);
@@ -24,14 +24,16 @@ function useAudio(file) {
 
   useEffect(() => {
     if (playing) {
-      audioElement.play();
-      setEnded(false);
+      if (file) {
+        audioElement.play();
+        setEnded(false);
+      }
     } else {
       audioElement.pause();
     }
-  }, [playing, audioElement]);
+  }, [playing, audioElement, file]);
 
-  return { playing, toggle, stop, ended };
+  return { playing, togglePlayback, stop, ended };
 }
 
 export default useAudio

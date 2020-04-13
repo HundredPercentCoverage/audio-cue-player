@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useRef, useContext} from 'react';
 import { Segment, Button, Icon } from 'semantic-ui-react';
-import { useRef } from 'react';
-import { useContext } from 'react';
 
 import { PlayersContext } from '../context/PlayersContext';
 import useAudio from '../hooks/useAudio';
 
 function SingleAudioPlayer({ file, selected, playerId }) {
-  const { playing, toggle, stop } = useAudio(file);
+  const { playing, togglePlayback, stop } = useAudio(file);
   const fileInput = useRef();
 
   const { dispatch } = useContext(PlayersContext);
@@ -22,7 +20,7 @@ function SingleAudioPlayer({ file, selected, playerId }) {
       <Button icon onClick={() => fileInput.current.click()}>
         <Icon name="folder" />
       </Button>
-      <Button disabled={!file} icon onClick={toggle}>
+      <Button disabled={!file} icon onClick={togglePlayback}>
         <Icon name={playing ? 'pause' : 'play'} color={playing ? 'blue' : 'green'}/>
       </Button>
       <Button disabled={!file} icon onClick={stop}>
